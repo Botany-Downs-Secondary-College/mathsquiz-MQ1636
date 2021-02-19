@@ -1,0 +1,451 @@
+from tkinter import*
+from tkinter import ttk
+import random
+from random import randint
+
+class MathQuiz:
+    def __init__(self, parent):
+        self.i = 0
+        self.z = 1
+        Name = None
+        """Widgets for frame 1"""
+        self.frame1 = Frame(parent)
+        self.frame1.grid(row=0, column=0)
+
+        self.TitleLabel = Label(self.frame1, bg = "black", fg = "white", width = 20, padx = 30, pady = 10,
+                                text = "Welcome to Math Quiz", font=("Times", "14", "bold italic"))
+        self.TitleLabel.grid(columnspan = 2)
+        self.nextbutton = ttk.Button(self.frame1, text = "Next" , command = self.show_frame)
+        self.nextbutton.grid(row = 8, column = 1)
+        self.AgeLabel = Label(self.frame1, fg = "black", text = "Age", anchor = 'w', width = 10,padx =30, pady =10, font =("times", "12", "bold") )
+        self.AgeLabel.grid(row = 3, column = 0)
+        self.NameLabel = Label(self.frame1, text = "Name", fg = "black", padx = 30, pady=10,  anchor = "w", width = 10, font =("times", "12", "bold"))
+        self.NameLabel.grid(row = 2, column = 0)
+        self.NameEntry = Entry(self.frame1, width = 10)
+        self.NameEntry.grid(row = 2, column =1, columnspan =2)
+        self.AgeEntry = Entry(self.frame1, width = 10)
+        self.AgeEntry.grid(row = 3, column= 1, columnspan = 2)
+        self.DifficultyLabel = Label(self.frame1, fg = "black", padx =30, pady=10, text = "Choose Difficulty", anchor = 'w', width = 10, font = ("times", "12", "bold"))
+        self.DifficultyLabel.grid(row = 4, column = 0, columnspan = 1)
+        self.DifficultyChoice = ["Easy", "Med", "Hard"]
+        self.diff_level = StringVar()
+        self.diff_level.set(0)
+        self.diff_buttons = []
+        for a in range(len(self.DifficultyChoice)):
+            self.DiffButton = Radiobutton(self.frame1, fg = "black", text = self.DifficultyChoice[a], width =5, padx= 40, height = 2, variable = self.diff_level, value = a, font = ("times", "10","bold"))
+            self.diff_buttons.append(self.DiffButton)
+            self.DiffButton.grid(row= a + 5, column = 0, sticky = W)
+
+
+        """Widgets for frame 2"""
+        self.frame2 = Frame(parent)
+
+        self.questions = Label(self.frame2, bg = "black", fg = "white", width = 50, padx = 20, pady = 10,
+                               text = "Quiz Questions", font=("times", "14", "bold italic"))
+        self.questions.grid(columnspan= 8)
+        self.home = ttk.Button(self.frame2, text = "Home", command = self.show_frame1)
+        self.home.grid(row = 8, column = 7)
+        self.math_easy = Entry(self.frame2, width = 15)
+        self.math_easy.grid(row = 1, column = 1, sticky = 'w')
+        self.checkbutton_easy = ttk.Button(self.frame2, text = "Check", command = self.check_answer_easy)
+        self.checkbutton_easy.grid(row = 8, column = 0, sticky='w')
+        self.mathquestions_easy = Label(self.frame2, text = self.generate_ranint() , fg = "black", padx = 60, pady = 40, font = ("times", "9", "italic"))
+        self.mathquestions_easy.grid(row = 1, column = 0)
+        self.currentscore = Label(self.frame2, text = "Question: {}/5".format(self.z), fg = "black", font = ("times", "8"))
+        self.currentscore.grid(row = 0, column =5)
+
+        '''Widgets for frame 3'''
+        self.frame3 = Frame(parent)
+        self.questions = Label(self.frame3, bg="black", fg="white", width=50, padx=20, pady=10,
+                               text="Quiz Questions", font=("times", "14", "bold italic"))
+        self.questions.grid(columnspan=8)
+        self.home = ttk.Button(self.frame3, text="Home", command=self.show_frame1)
+        self.home.grid(row=8, column=7)
+        self.math_med = Entry(self.frame3, width=15)
+        self.math_med.grid(row=1, column=1, sticky='w')
+        self.checkbutton_med = ttk.Button(self.frame3, text="Check", command=self.check_answer_medium)
+        self.checkbutton_med.grid(row=8, column=0, sticky='w')
+        self.mathquestions_med = Label(self.frame3, text= self.generate_ranint_medium(), fg="black", padx=60, pady=40,
+                                   font=("times", "9", "italic"))
+        self.mathquestions_med.grid(row=1, column=0)
+        self.currentscore = Label(self.frame3, text="Question: {}/5".format(self.z), fg="black", font=("times", "8"))
+        self.currentscore.grid(row=0, column=5)
+
+        '''Widgets for frame 4'''
+        self.frame4 = Frame(parent)
+        self.questions = Label(self.frame4, bg="black", fg="white", width=50, padx=20, pady=10,
+                               text="Quiz Questions", font=("times", "14", "bold italic"))
+        self.questions.grid(columnspan=8)
+        self.home = ttk.Button(self.frame4, text="Home", command=self.show_frame1)
+        self.home.grid(row=8, column=7)
+        self.math_hard = Entry(self.frame4, width=15)
+        self.math_hard.grid(row=1, column=1, sticky='w')
+        self.checkbutton_hard = ttk.Button(self.frame4, text="Check", command=self.check_answer_hard)
+        self.checkbutton_hard.grid(row=8, column=0, sticky='w')
+        self.mathquestions_hard = Label(self.frame4, text=self.generate_ranint_hard(), fg="black", padx=60, pady=40,
+                                       font=("times", "10", "italic"))
+        self.mathquestions_hard.grid(row=1, column=0)
+        self.currentscore = Label(self.frame4, text="Question: {}/5".format(self.z), fg="black", font=("times", "8"))
+        self.currentscore.grid(row=0, column=5)
+        '''Widgets for frame 5'''
+        self.frame5 = Frame(parent)
+        self.questions = Label(self.frame5, bg="black", fg="white", width=50, padx=20, pady=10,
+                               text="Results", font=("times", "14", "bold italic"))
+        self.questions.grid(columnspan = 8)
+        self.nametitle = Label(self.frame5, fg = "black", text = "Name", font = ("times", "12", "bold"))
+        self.nametitle.grid(row = 4, column = 0)
+        self.scoretitle = Label(self.frame5, fg = "black", text = "Score", font = ("times", "12", "bold"))
+        self.scoretitle.grid(row = 4, column = 7)
+        self.exit = ttk.Button(self.frame5, text= "Finish", command=exit)
+        self.exit.grid(row=20, column=6, sticky = "w")
+
+
+    def show_frame(self):
+        global Name
+        Name = self.NameEntry.get()
+        option = self.diff_level.get()
+        if option == "0":
+            self.frame1.grid_remove()
+            self.frame2.grid()
+        elif option == "1":
+            self.frame1.grid_remove()
+            self.frame3.grid()
+        else:
+            self.frame1.grid_remove()
+            self.frame4.grid()
+
+    def show_frame1(self):
+        try:
+            self.frame2.grid_remove()
+        except:
+            pass
+        try:
+            self.frame3.grid_remove()
+        except:
+            pass
+        try:
+            self.frame4.grid_remove()
+        except:
+            pass
+        try:
+            self.frame5.grid_remove()
+        except:
+            pass
+
+        self.frame1.grid()
+    def show_frame3(self):
+        self.frame1.grid_remove()
+        self.frame3.grid()
+
+    def check_answer_easy(self):
+        global i, z
+        answer = self.math_easy.get()
+        try:
+            num_answer = int(answer)
+            if num_answer == number + number1:
+                try:
+                    self.incorrectmsg.grid_remove()
+                except:
+                    pass
+                try:
+                    self.invalid.grid_remove()
+                except:
+                    pass
+                self.correctmsg = Label(self.frame2, text="Correct!", fg="green", font=("times", "8", "italic"))
+                self.correctmsg.grid(row=2, column=0)
+                self.math_easy.delete(0, END)
+                self.mathquestions = Label(self.frame2, text=self.generate_ranint(), fg="black", padx=60, pady=40,
+                                           font=("times", "9", "italic"))
+                self.mathquestions.grid(row=1, column=0)
+                self.i = self.i + 1
+                self.z = self.z + 1
+                if self.z == 6:
+                    self.frame2.grid_remove()
+                    self.frame5.grid()
+                    self.score = Label(self.frame5, fg="black", text="{}/5".format(self.i), font=("times", "8"))
+                    self.score.grid(row=5, column=7)
+                    self.name = Label(self.frame5, fg="black", text=Name, font=("times", "8",))
+                    self.name.grid(row=5, column=0)
+
+                else:
+                    self.currentscore = Label(self.frame2, text="Question: {}/5".format(self.z), fg="black",
+                                              font=("times", "8"))
+                    self.currentscore.grid(row=0, column=5)
+
+
+            else:
+                try:
+                    self.correctmsg.grid_remove()
+                except:
+                    pass
+                try:
+                    self.invalid.grid_remove()
+                except:
+                    pass
+                self.incorrectmsg = Label(self.frame2, text="Incorrect!", fg="red", font=("times", "8", "italic"))
+                self.incorrectmsg.grid(row=2, column=0)
+                self.math_easy.delete(0, END)
+                self.mathquestions = Label(self.frame2, text=self.generate_ranint(), fg="black", padx=60, pady=40,
+                                           font=("times", "9", "italic"))
+                self.mathquestions.grid(row = 1, column = 0)
+                self.z = self.z + 1
+                if self.z == 6:
+                    self.frame2.grid_remove()
+                    self.frame5.grid()
+                    self.score = Label(self.frame5, fg="black", text="{}/5".format(self.i), font=("times", "8"))
+                    self.score.grid(row=5, column=7)
+                    self.name = Label(self.frame5, fg="black", text=Name, font=("times", "8",))
+                    self.name.grid(row=5, column=0)
+
+                else:
+                    self.currentscore = Label(self.frame2, text="Question: {}/5".format(self.z), fg="black",
+                                              font=("times", "8"))
+                    self.currentscore.grid(row=0, column=5)
+
+
+
+        except:
+            try:
+                self.incorrectmsg.grid_remove()
+            except:
+                pass
+            try:
+                self.correctmsg.grid_remove()
+            except:
+                pass
+            self.invalid = Label(self.frame2, text="That's not a valid input", fg = "red", font = ("times", "8", "italic"))
+            self.invalid.grid(row=2, column = 0)
+            self.math_easy.delete(0, END)
+            self.frame2.grid()
+            self.z = self.z + 1
+            self.mathquestions = Label(self.frame2, text=self.generate_ranint(), fg="black", padx=60, pady=40,
+                                       font=("times", "9", "italic"))
+            self.mathquestions.grid(row = 1, column = 0)
+            if self.z == 6:
+                self.frame2.grid_remove()
+                self.frame5.grid()
+                self.score = Label(self.frame5, fg="black", text="{}/5".format(self.i), font=("times", "8"))
+                self.score.grid(row=5, column=7)
+                self.name = Label(self.frame5, fg="black", text=Name, font=("times", "8",))
+                self.name.grid(row=5, column=0)
+
+            else:
+                self.currentscore = Label(self.frame2, text="Question: {}/5".format(self.z), fg="black", font=("times", "8"))
+                self.currentscore.grid(row=0, column=5)
+
+    def check_answer_medium(self):
+        global i, z
+        answer = self.math_med.get()
+        try:
+            num_answer = int(answer)
+            if num_answer == number2 * number3:
+                try:
+                    self.incorrectmsg.grid_remove()
+                except:
+                    pass
+                try:
+                    self.invalid.grid_remove()
+                except:
+                    pass
+                self.correctmsg = Label(self.frame3, text="Correct!", fg="green", font=("times", "8", "italic"))
+                self.correctmsg.grid(row=2, column=0)
+                self.math_med.delete(0, END)
+                self.mathquestions = Label(self.frame3, text=self.generate_ranint_medium(), fg="black", padx=60, pady=40,
+                                           font=("times", "9", "italic"))
+                self.mathquestions.grid(row=1, column=0)
+                self.i = self.i + 1
+                self.z = self.z + 1
+                if self.z == 6:
+                    self.frame3.grid_remove()
+                    self.frame5.grid()
+                    self.score = Label(self.frame5, fg="black", text="{}/5".format(self.i), font=("times", "8"))
+                    self.score.grid(row=5, column=7)
+                    self.name = Label(self.frame5, fg="black", text=Name, font=("times", "8",))
+                    self.name.grid(row=5, column=0)
+
+                else:
+                    self.currentscore = Label(self.frame3, text="Question: {}/5".format(self.z), fg="black",
+                                              font=("times", "8"))
+                    self.currentscore.grid(row=0, column=5)
+
+
+            else:
+                try:
+                    self.correctmsg.grid_remove()
+                except:
+                    pass
+                try:
+                    self.invalid.grid_remove()
+                except:
+                    pass
+                self.incorrectmsg = Label(self.frame3, text="Incorrect!", fg="red", font=("times", "8", "italic"))
+                self.incorrectmsg.grid(row=2, column=0)
+                self.math_med.delete(0, END)
+                self.mathquestions = Label(self.frame3, text=self.generate_ranint_medium(), fg="black", padx=60,pady=40,font=("times", "9", "italic"))
+                self.mathquestions.grid(row=1, column=0)
+                self.z = self.z + 1
+                if self.z == 6:
+                    self.frame3.grid_remove()
+                    self.frame5.grid()
+                    self.score = Label(self.frame5, fg="black", text="{}/5".format(self.i), font=("times", "8"))
+                    self.score.grid(row=5, column=7)
+                    self.name = Label(self.frame5, fg="black", text=Name, font=("times", "8",))
+                    self.name.grid(row=5, column=0)
+
+                else:
+                    self.currentscore = Label(self.frame3, text="Question: {}/5".format(self.z), fg="black",
+                                              font=("times", "8"))
+                    self.currentscore.grid(row=0, column=5)
+
+        except:
+            try:
+                self.incorrectmsg.grid_remove()
+            except:
+                pass
+            try:
+                self.correctmsg.grid_remove()
+            except:
+                pass
+            self.invalid = Label(self.frame3, text="That's not a valid input", fg = "red", font = ("times", "8", "italic"))
+            self.invalid.grid(row=2, column = 0)
+            self.math_med.delete(0, END)
+            self.mathquestions = Label(self.frame3, text=self.generate_ranint_medium(), fg="black", padx=60, pady=40,
+                                       font=("times", "9", "italic"))
+            self.mathquestions.grid(row=1, column=0)
+            self.z = self.z + 1
+            if self.z == 6:
+                self.frame3.grid_remove()
+                self.frame5.grid()
+                self.score = Label(self.frame5, fg="black", text="{}/5".format(self.i), font=("times", "8"))
+                self.score.grid(row=5, column=7)
+                self.name = Label(self.frame5, fg="black", text=Name, font=("times", "8",))
+                self.name.grid(row=5, column=0)
+
+            else:
+                self.currentscore = Label(self.frame3, text="Question: {}/5".format(self.z), fg="black",
+                                          font=("times", "8"))
+                self.currentscore.grid(row=0, column=5)
+
+    def check_answer_hard(self):
+        answer = self.math_hard.get()
+        try:
+            num_answer = int(answer)
+            if num_answer == number4*(number7 * number7) + (number5*number7) + number6:
+                try:
+                    self.incorrectmsg.grid_remove()
+                except:
+                    pass
+                try:
+                    self.invalid.grid_remove()
+                except:
+                    pass
+                self.correctmsg = Label(self.frame4, text="Correct!", fg="green", font=("times", "8", "italic"))
+                self.correctmsg.grid(row=2, column=0)
+                self.math_hard.delete(0, END)
+                self.mathquestions = Label(self.frame4, text=self.generate_ranint_hard(), fg="black", padx=60,pady=40,font=("times", "9", "italic"))
+                self.mathquestions.grid(row=1, column=0)
+                self.i = self.i + 1
+                self.z = self.z + 1
+                if self.z == 6:
+                    self.frame4.grid_remove()
+                    self.frame5.grid()
+                    self.score = Label(self.frame5, fg="black", text="{}/5".format(self.i), font=("times", "8"))
+                    self.score.grid(row=5, column=7)
+                    self.name = Label(self.frame5, fg="black", text=Name, font=("times", "8",))
+                    self.name.grid(row=5, column=0)
+
+                else:
+                    self.currentscore = Label(self.frame4, text="Question: {}/5".format(self.z), fg="black",
+                                              font=("times", "8"))
+                    self.currentscore.grid(row=0, column=5)
+
+
+            else:
+                try:
+                    self.correctmsg.grid_remove()
+                except:
+                    pass
+                try:
+                    self.invalid.grid_remove()
+                except:
+                    pass
+                self.incorrectmsg = Label(self.frame4, text="Incorrect!", fg="red", font=("times", "8", "italic"))
+                self.incorrectmsg.grid(row=2, column=0)
+                self.math_hard.delete(0, END)
+                self.mathquestions = Label(self.frame4, text=self.generate_ranint_hard(), fg="black", padx=60, pady=40,
+                                           font=("times", "9", "italic"))
+                self.mathquestions.grid(row=1, column=0)
+                self.z = self.z + 1
+                if self.z == 6:
+                    self.frame4.grid_remove()
+                    self.frame5.grid()
+                    self.score = Label(self.frame5, fg="black", text="{}/5".format(self.i), font=("times", "8"))
+                    self.score.grid(row=5, column=7)
+                    self.name = Label(self.frame5, fg="black", text=Name, font=("times", "8",))
+                    self.name.grid(row=5, column=0)
+
+                else:
+                    self.currentscore = Label(self.frame4, text="Question: {}/5".format(self.z), fg="black",
+                                              font=("times", "8"))
+                    self.currentscore.grid(row=0, column=5)
+
+
+
+        except:
+            try:
+                self.incorrectmsg.grid_remove()
+            except:
+                pass
+            try:
+                self.correctmsg.grid_remove()
+            except:
+                pass
+            self.invalid = Label(self.frame4, text="That's not a valid input", fg="red", font=("times", "8", "italic"))
+            self.invalid.grid(row=2, column=0)
+            self.math_hard.delete(0, END)
+            self.mathquestions = Label(self.frame4, text=self.generate_ranint_hard(), fg="black", padx=60, pady=40,
+                                       font=("times", "9", "italic"))
+            self.mathquestions.grid(row=1, column=0)
+            self.z = self.z + 1
+            if self.z == 6:
+                self.frame4.grid_remove()
+                self.frame5.grid()
+                self.score = Label(self.frame5, fg="black", text="{}/5".format(self.i), font=("times", "8"))
+                self.score.grid(row=5, column=7)
+                self.name = Label(self.frame5, fg="black", text=Name, font=("times", "8",))
+                self.name.grid(row=5, column=0)
+
+            else:
+                self.currentscore = Label(self.frame4, text="Question: {}/5".format(self.z), fg="black",
+                                          font=("times", "8"))
+                self.currentscore.grid(row=0, column=5)
+
+    def generate_ranint_medium(self):
+        global number2, number3
+        number2 = randint(0,12)
+        number3 = randint(0,12)
+        string_medium = "{} X {}".format(number2, number3)
+        return string_medium
+
+    def generate_ranint_hard(self):
+        global number4, number5, number6, number7
+        number4 = randint(0,10)
+        number5 = randint(0,10)
+        number6 = randint(0,10)
+        number7 = randint(0,5)
+        string_hard = "Find value of {}x^2 + {}x + {} at x = {}".format(number4, number5, number6, number7)
+        return string_hard
+
+    def generate_ranint(self):
+        global number, number1
+        number = randint(0,10)
+        number1 = randint(0,10)
+        string = "{} + {}".format(number, number1)
+        return string
+
+
+if __name__ == "__main__":
+    root = Tk()
+    frames = MathQuiz(root)
+    root.title("OOP")
+    root.mainloop()
