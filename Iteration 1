@@ -1,0 +1,43 @@
+from tkinter import*
+from tkinter import ttk
+class MathQuiz:
+    def __init__(self,parent):
+        """Widgets for frame 1"""
+        self.Welcome = Frame(parent)
+        self.Welcome.grid(row=0, column=0)
+
+        self.TitleLabel = Label(self.Welcome, bg = "black", fg = "white", width = 20, padx = 30, pady = 10,
+                                text = "Welcome to Math Quiz", font=("Times", "14", "bold italic"))
+        self.TitleLabel.grid(columnspan = 2)
+        self.NextButton = ttk.Button(self.Welcome, text = "Next" , command = self.show_Questions)
+        self.NextButton.grid(row = 8, column = 1)
+
+        """Widgets for frame 2"""
+        self.Questions = Frame(parent)
+        #self.Questions.grid(row=0, column=1)
+
+        self.QuestionsLabel = Label(self.Questions, bg = "black", fg = "white", width = 20, padx = 30, pady = 10,
+                               text = "Quiz Questions", font=("times", "14", "bold italic"))
+        self.QuestionsLabel.grid(columnspan = 2)
+        self.Home = ttk.Button(self.Questions, text = "Home", command = self.show_Welcome)
+        self.Home.grid(row = 1, column = 0)
+
+
+
+
+        self.Maths = Entry(self.MathsQuestions, width = 30)
+        self.MathsQuestions.grid(columnspan = 2)
+        self.MathsQuestions.grid(row = 5, column = 1)
+    def show_Welcome(self):
+        self.Questions.grid_remove()
+        self.Welcome.grid()
+
+    def show_Questions(self):
+        self.Welcome.grid_remove()
+        self.Questions.grid()
+
+if __name__ == "__main__":
+    root = Tk()
+    frames = MathQuiz(root)
+    root.title("OOP")
+    root.mainloop()
