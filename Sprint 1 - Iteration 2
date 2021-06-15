@@ -3,7 +3,7 @@ from tkinter import ttk
 
 class Advanced_English_Quiz:
     def __init__(self, parent):
-        Name = None
+        Name = None 
         Age = None
 
         """Widgets for Frame 1"""
