@@ -27,7 +27,7 @@ class Advanced_English_Quiz:
         self.EnterAge.grid(row=8, column=1)
 
 if __name__ == "__main__":
-    root = Tk()
+    root = Tk() 
     frames = Advanced_English_Quiz(root)
     root.geometry("400x350")
     root.title("English Rich Quiz")
