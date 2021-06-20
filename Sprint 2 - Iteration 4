@@ -1,0 +1,216 @@
+from tkinter import *
+from tkinter import ttk
+
+
+class Advanced_English_Quiz():
+    def __init__(self, parent):
+        Name = ""
+        Age = 0
+        self.score = 0
+        self.no_of_questions = 1
+        self.english_questions_number = 0
+        self.english_answers = ["Peace", "Simile", "First Person", "True", "Assonance"]
+
+
+        """Widgets for Frame 1"""
+        self.home = Frame(parent)
+        self.home.grid(row=0, column=0)
+
+        self.title_label = Label(self.home, bg="Green", fg="white", width=105, padx=100, pady=100, height=2,
+                                 text="Advanced English Quiz", font=("Times", "24", "bold italic"))
+        self.title_label.grid(row=0, columnspan=3)
+        self.name_label = Label(self.home, bg="white", fg="black", padx=10, pady=20,
+                                text="Enter Name: ", font=("Times", "14", "bold"))
+        self.name_label.grid(row=4, column=0)
+
+        self.enter_name = Entry(self.home, width=40)
+        self.enter_name.grid(row=4, column=1)
+
+        self.age_label = Label(self.home, bg="white", fg="black", padx=10, pady=20,
+                               text="Enter Age: ", font=("Times", "14", "bold"))
+        self.age_label.grid(row=8, column=0)
+        self.enter_age = Entry(self.home, width=40)
+        self.enter_age.grid(row=8, column=1)
+        self.next_button = ttk.Button(self.home, text="Next", command=lambda: [self.show_english()])
+        self.next_button.grid(row=20, column=2)
+
+        self.difficulty = Label(self.home, bg="white", fg="black", padx=10, pady=20,
+                                text="Choose subject: ", font=("Times", "14", "bold"))
+        self.difficulty.grid(row=12, column=0, columnspan=1)
+        self.difficulty = ["English", "History", "Geography"]
+        self.diff_level = StringVar()
+        self.diff_level.set(0)
+        self.diff_buttons = []
+
+        for a in range(len(self.difficulty)):
+            self.difficulty_buttons = Radiobutton(self.home, fg="black", text=self.difficulty[a], width=10, padx=10,
+                                                  pady=20,
+                                                  height=2, value=a, font=("Times", "14", "bold"))
+            self.difficulty_buttons.grid(row=a + 12, column=1, sticky=NSEW)
+
+
+        """Widgets for Frame 2"""
+        # Dont put grid when making a new frame in the def init, put it in a separate function and call that function with a button
+        self.english = Frame(parent)
+        self.english_label = Label(self.english, fg="white", bg="green", width=125, padx=100, pady=100,
+                                   height=0, text="English Questions", font=("Times", "20", "bold"))
+        self.english_label.grid(columnspan=3, row=0)
+        self.english_answer = Entry(self.english, width=40)
+        self.english_answer.grid(row=20, column=1)
+        self.english_answer.focus()
+        self.english_answer_label = Label(self.english, text="Answer:", font=("times", "12", "bold"))
+        self.english_answer_label.grid(row=4, column=1)
+        self.questions_english = Label(self.english, text=self.englishquestions(), font=('times', "14", "bold"))
+        self.questions_english.grid(row=3, column=0)
+        self.checkbuttonenglish = ttk.Button(self.english, text="Check", width=5, command=lambda: self.check_answer_english())
+        self.checkbuttonenglish.grid(row=8, column=2, sticky= 'w')
+        self.checkbuttonenglish.bind("<Return>")
+        self.current_question = Label(self.english, text="Question: {}/5".format(self.no_of_questions),
+                                     fg="white", bg="Green",
+                                     font=("times", "12"))
+        self.current_question.grid(row=0, column=0)
+        self.number_correct = Label(self.english, text="Score: {}/5".format(self.score), fg="black",
+                                   font=("times", "14", "bold"))
+        self.number_correct.grid(row=0, column=2)
+        self.current_standard = StringVar()
+
+        """Widgets for Frame 3"""
+        self.history = Frame(parent)
+
+        """Widgets for Frame 4"""
+        self.geography = Frame(parent)
+
+        """Widgets for Frame 5"""
+
+
+
+
+
+
+
+
+    def show_frame(self):
+        global Name
+        age = self.enter_age.get()
+
+        try:
+            self.error_label.grid_remove()
+
+        except:
+            pass
+
+        try:
+            Age = int(age)
+
+            if Age > 18:
+                self.error_label = Label(self.home, text="You are not an appropriate age", fg="red",
+                                         font=("times", "10", "bold"))
+                self.error_label.grid(column=3, row=8)
+            elif Age < 14:
+                self.error_label = Label(self.home, text="You are not an appropriate age", fg="red",
+                                         font=("times", "10", "bold"))
+                self.error_label.grid(column=3, row=8)
+            else:
+                Name = self.enter_name.get()
+                option = self.diff_level.get()
+                if option == "0":
+                    self.home.grid_remove()
+                    self.english.grid()
+                    self.current_standard.set("English")
+                elif option == "1":
+                    self.home.grid_remove()
+                    self.history.grid()
+                    self.current_standard.set("History")
+                else:
+                    self.home.grid_remove()
+                    self.geography.grid()
+                    self.current_standard.set("Geography")
+
+        except:
+            self.error_label = Label(self.home, text="This is an invalid request", fg="red",
+                                     font=("times", "10", "bold"))
+            self.error_label.grid(column=3, row=8)
+
+
+
+    def show_english(self):
+        self.home.grid_remove()
+        self.english.grid()
+
+    def englishquestions(self):
+        global questions_english
+        english_questions_file = open("EnglishQuestions.txt", "r")
+        english_content = english_questions_file.read()
+        questions_english = english_content.split("*")
+        return questions_english[self.english_questions_number]
+
+
+    def check_answer_english(self):
+        english_answer = self.english_answer.get()
+        if english_answer == self.english_answers[self.english_questions_number]:
+            try:
+                self.english_incorrect.grid_remove()
+
+            except:
+                pass
+            try:
+                self.english_correct = Label(self.english, text = "Correct", fg = "Green",
+                                             font = ("Times", "12"))
+                self.english_correct.grid(row=8, column=2)
+                self.english_answer.delete(0, END)
+                self.english_questions_number = self.english_questions_number + 1
+                self.no_of_questions = self.no_of_questions + 1
+                self.score = self.score + 1
+                self.next_question(self.english, self.englishquestions())
+
+            except:
+                self.questions_english.grid_remove()
+
+        else:
+            try:
+                self.english_correct.grid_remove()
+            except:
+                pass
+            try:
+                self.english_incorrect = Label(self.english, text = "Incorrect", fg = "Red",
+                                               font = ("Times", "12"))
+                self.english_incorrect.grid(row=8, column=2)
+                self.english_answer.delete(0, END)
+                self.english_questions_number = self.english_questions_number + 1
+                self.no_of_questions = self.no_of_questions + 1
+                self.next_question(self.english, self.englishquestions())
+
+            except:
+                self.questions_english.grid_remove()
+
+    def next_question(self, frame, question):
+        self.questions_english.grid_remove()
+        self.questions_english = Label(frame, text =question, font=('Times', '12', 'bold'))
+        self.questions_english.grid(row=1, column=0)
+        self.number_correct.grid_remove()
+        self.number_correct = Label(frame, text="Score: {}".format(self.score), fg="black",
+                                           font=("times", "14", "bold"))
+        self.number_correct.grid(row=0, column=2)
+        self.current_question.grid_remove()
+        self.current_question = Label(frame, text="Question: {}/5".format(self.no_of_questions), fg="black",
+                                           font=("times", "12", "bold"))
+        self.current_question.grid(row=0, column=0)
+
+
+    def show_history(self):
+        self.home.grid_remove()
+        self.history.grid()
+
+    def show_geography(self):
+        self.home.grid_remove()
+        self.geography.grid()
+
+
+if __name__ == "__main__":
+    root = Tk()
+    frames = Advanced_English_Quiz(root)
+    root.geometry("400x350")
+    root.title("English Rich Quiz")
+    root.mainloop()
+
+
