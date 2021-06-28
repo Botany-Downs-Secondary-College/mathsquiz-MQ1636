@@ -5,7 +5,7 @@ import datetime
 
 class Advanced_English_Quiz():
     def __init__(self, parent):
-        Name = None
+        Name = None 
         Age = None
         self.score = 0
         self.no_of_questions = 1
