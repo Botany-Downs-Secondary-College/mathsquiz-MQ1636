@@ -26,7 +26,7 @@ class Advanced_English_Quiz():
         self.name_label = Label(self.home, bg="white", fg="black", padx=10, pady=20,
                                 text="Enter Name: ", font=("Times", "14", "bold"))
         self.name_label.grid(row=4, column=0)
-
+ 
         self.enter_name = Entry(self.home, width=40)
         self.enter_name.grid(row=4, column=1)
 
