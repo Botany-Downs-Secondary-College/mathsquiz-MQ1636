@@ -1,4 +1,4 @@
-from tkinter import * # This imports tkinter which can be used to create and design GUI in the code.
+from tkinter import * # This imports tkinter which can be used to create and design GUI in the code. 
 from tkinter import ttk # This imports ttk which can also be used to create and design GUI in the code.
 import datetime # This imports a datetime module that can be used to tell the user the date of which the code was attempted.
 
