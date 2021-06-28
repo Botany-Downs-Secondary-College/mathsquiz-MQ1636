@@ -7,7 +7,7 @@ import datetime
 class English_richQuiz:
     def __init__(self, parent):
 
-        self.Home = Frame(parent)
+        self.Home = Frame(parent) 
         self.Home.grid(row=0, column=0)
 
         self.TitleLabel = Label(self.Home, bg="Purple", fg="white", width=108, padx=100, pady=10, height = 2,
