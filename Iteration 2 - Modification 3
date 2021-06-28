@@ -32,7 +32,7 @@ class Advanced_English_Quiz():
         self.difficulty = Label(self.home, bg="white", fg="black", padx=10, pady=20,
                                 text="Choose difficulty: ", font=("Times", "14", "bold"))
         self.difficulty.grid(row=12, column=0, columnspan=1)
-        self.difficulty = ["English", "History", "Geography"]
+        self.difficulty = ["English", "History", "Geography"] 
         self.diff_level = StringVar()
         self.diff_level.set(0)
         self.diff_buttons = []
