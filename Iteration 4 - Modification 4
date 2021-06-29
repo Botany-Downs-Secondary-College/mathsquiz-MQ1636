@@ -1,4 +1,4 @@
-from tkinter import * # This imports tkinter which can be used to create and design GUI in the code. 
+from tkinter import * # This imports tkinter which can be used to create and design GUI in the code.
 from tkinter import ttk # This imports ttk which can also be used to create and design GUI in the code.
 import datetime # This imports a datetime module that can be used to tell the user the date of which the code was attempted.
 
@@ -366,7 +366,7 @@ class Advanced_English_Quiz(): # This class creates an advanced english quiz whe
                 self.results.grid()
                 self.final_score = Label(self.results, fg="black", text="{}/5".format(self.score),
                                         font=("times", "20"))
-                self.final_score.grid(row=5, column=7)
+                self.final_score.grid(row=5, column=3)
                 self.final_name = Label(self.results, fg="black", text=Name, font=("times", "20",))
                 self.final_name.grid(row=5, column=0)
                 self.result = str(self.score)
@@ -395,7 +395,7 @@ class Advanced_English_Quiz(): # This class creates an advanced english quiz whe
                 self.results.grid()
                 self.final_score = Label(self.results, fg="black", text="{}/5".format(self.score),
                                         font=("times", "20"))
-                self.final_score.grid(row=5, column=7)
+                self.final_score.grid(row=5, column=3)
                 self.final_name = Label(self.results, fg="black", text=Name, font=("times", "20",))
                 self.final_name.grid(row=5, column=0)
                 self.result = str(self.score)
@@ -439,7 +439,7 @@ class Advanced_English_Quiz(): # This class creates an advanced english quiz whe
                 self.results.grid()
                 self.final_score = Label(self.results, fg="black", text="{}/5".format(self.score),
                                         font=("times", "8"))
-                self.final_score.grid(row=5, column=7)
+                self.final_score.grid(row=5, column=3)
                 self.final_name = Label(self.results, fg="black", text=Name, font=("times", "8",))
                 self.final_name.grid(row=5, column=0)
                 self.result = str(self.score)
@@ -467,7 +467,7 @@ class Advanced_English_Quiz(): # This class creates an advanced english quiz whe
                 self.results.grid()
                 self.final_score = Label(self.results, fg="black", text="{}/5".format(self.score),
                                         font=("times", "20"))
-                self.final_score.grid(row=5, column=7)
+                self.final_score.grid(row=5, column=3)
                 self.final_name = Label(self.results, fg="black", text=Name, font=("times", "20",))
                 self.final_name.grid(row=5, column=0)
                 self.result = str(self.score)
