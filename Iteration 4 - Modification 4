@@ -67,7 +67,7 @@ class Advanced_English_Quiz(): # This class creates an advanced english quiz whe
         self.english_answer.focus()
         self.english_answer_label = Label(self.english, text="Answer:", font=("times", "12", "bold"))
         self.english_answer_label.grid(row=100, column=1)
-        self.questions_english = Label(self.english, text=self.englishquestions(), font=('times', "14", "bold"))
+        self.questions_english = Label(self.english, text=self.englishquestions(), font=('times', "18", "bold"))
         self.questions_english.grid(row=30, column=0)
         self.checkbuttonenglish = ttk.Button(self.english, text="Check", width=10,
                                              command=lambda: self.check_answer_english())
@@ -95,7 +95,7 @@ class Advanced_English_Quiz(): # This class creates an advanced english quiz whe
         self.history_answer.focus()
         self.history_answer_label = Label(self.history, text="Answer:", font=("times", "12", "bold"))
         self.history_answer_label.grid(row=100, column=1)
-        self.questions_history = Label(self.history, text=self.historyquestions(), font=('times', "14", "bold"))
+        self.questions_history = Label(self.history, text=self.historyquestions(), font=('times', "18", "bold"))
         self.questions_history.grid(row=30, column=0)
         self.checkbuttonhistory = ttk.Button(self.history, text="Check", width=5,
                                              command=lambda: self.check_answer_history())
@@ -120,7 +120,7 @@ class Advanced_English_Quiz(): # This class creates an advanced english quiz whe
         self.geography_answer.focus()
         self.geography_answer_label = Label(self.geography, text="Answer:", font=("times", "12", "bold"))
         self.geography_answer_label.grid(row=100, column=1)
-        self.questions_geography = Label(self.geography, text=self.geographyquestions(), font=('times', "14", "bold"))
+        self.questions_geography = Label(self.geography, text=self.geographyquestions(), font=('times', "18", "bold"))
         self.questions_geography.grid(row=30, column=0)
         self.checkbuttongeography = ttk.Button(self.geography, text="Check", width=5,
                                                command=lambda: self.check_answer_geography())
@@ -237,13 +237,13 @@ class Advanced_English_Quiz(): # This class creates an advanced english quiz whe
     def next_question(self, frame, question): # This function removes a question screen depending on the subject and also
         # helps iterate the question number and score after each question.
         self.questions_english.grid_remove()
-        self.questions_english = Label(frame, text=question, font=('Times', '12', 'bold'))
+        self.questions_english = Label(frame, text=question, font=('Times', '18', 'bold'))
         self.questions_english.grid(row=1, column=0)
         self.questions_history.grid_remove()
-        self.questions_history = Label(frame, text=question, font=('Times', '12', 'bold'))
+        self.questions_history = Label(frame, text=question, font=('Times', '18', 'bold'))
         self.questions_history.grid(row=1, column=0)
         self.questions_geography.grid_remove()
-        self.questions_geography = Label(frame, text=question, font=('Times', '12', 'bold'))
+        self.questions_geography = Label(frame, text=question, font=('Times', '18', 'bold'))
         self.questions_geography.grid(row=1, column=0)
         self.number_correct.grid_remove()
         self.number_correct = Label(frame, text="Score: {}".format(self.score), fg="black",
@@ -438,9 +438,9 @@ class Advanced_English_Quiz(): # This class creates an advanced english quiz whe
                 self.geography.grid_remove()
                 self.results.grid()
                 self.final_score = Label(self.results, fg="black", text="{}/5".format(self.score),
-                                        font=("times", "8"))
+                                        font=("times", "20"))
                 self.final_score.grid(row=5, column=3)
-                self.final_name = Label(self.results, fg="black", text=Name, font=("times", "8",))
+                self.final_name = Label(self.results, fg="black", text=Name, font=("times", "20",))
                 self.final_name.grid(row=5, column=0)
                 self.result = str(self.score)
                 Age = str(self.enter_age.get())
